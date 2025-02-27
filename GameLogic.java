@@ -16,7 +16,10 @@ public class GameLogic {
        }
        Set<String> location=setBombs(row,col,bombs);
        safe=board.length*board[0].length-location.size();
+
        display(board);
+       System.out.println(location);
+       System.out.println("No of safes:"+safe);
 
        startGame(board,location);
     }
@@ -28,29 +31,44 @@ public class GameLogic {
         Scanner input=new Scanner(System.in);
 
         while(this.safe!=0) {
+
             int x, y;
             System.out.println("ENTER-X:");
             x = input.nextInt();
             System.out.println("Enter-Y");
             y = input.nextInt();
-            String click = x + "," + y;
-            int[] loc = breakDownCell(click);
 
-            //checks
-            if (locations.contains(click)) {
-                board[loc[0]][loc[1]] = "X";
-                gameOver();
-                return;
-            }
+            String click = x + "," + y;
+
+            int[] loc = breakDownCell(click);
+            System.out.println("The cell u clicked is "+loc[0]+" "+loc[1]+" and the cell is "+board[loc[0]][loc[1]]);
+
+            if(checkBomb(click,locations)){return;}
+
+
             if (board[loc[0]][loc[1]].equals("E")) {
-                if (findAdj(board, loc[0], loc[1]) == 0) {
-                    board[x][y] = String.valueOf(findAdj(board, loc[0], loc[1]));
+                int count=findAdj(board, loc[0], loc[1]);
+                System.out.println(count+"is the adj COUNT FOR:"+loc[0]+":"+loc[1]);
+                if ( count!=0) {
+                    this.safe--;
+                    board[x][y] = String.valueOf(count);
                 } else {
                     BFS(board, x, y);
                 }
             }
             display(board);
         }
+        gameOver(true);
+    }
+
+    public Boolean checkBomb(String click, Set<String> locations) {
+        if (locations.contains(click)) {
+            int[] loc=breakDownCell(click);
+            board[loc[0]][loc[1]] = "X";
+            gameOver(false);
+            return true;
+        }
+        return false;
     }
 
     private void BFS(String[][] board, int x, int y) {
@@ -65,26 +83,29 @@ public class GameLogic {
             for(int i=0;i<l;i++){
                 String node=q.poll();
                 int[] loc=breakDownCell(node);
-                for(int[] dir:directions){
-                    int nx=dir[0]+loc[0];
-                    int ny=dir[1]+loc[1];
-                    if(nx<0||ny<0||nx>=row||ny>=col||visited.contains(nx+","+ny)){
-                        continue;
-                    }else{
-                        if(board[nx][ny].equals("E")) {
+                int count=findAdj(board,loc[0],loc[1]);
+                if(count>0){
+                    board[loc[0]][loc[1]]= String.valueOf(count);
+
+                }
+                else {
+                    board[loc[0]][loc[1]]="B";
+                    for (int[] dir : directions) {
+                        int nx = dir[0] + loc[0];
+                        int ny = dir[1] + loc[1];
+                        if (nx < 0 || ny < 0 || nx >= row || ny >= col || visited.contains(nx + "," + ny)) {
+                            continue;
+                        } else {
                             this.safe--;
-                            if (findAdj(board,nx,ny) == 0) {
-                                board[nx][ny] = String.valueOf(findAdj(board, nx,ny));
-                            } else {
-                                board[nx][ny]="B";
-                                visited.add(nx+","+ny);
-                                q.add(nx+","+ny);
-                            }
+                            q.add(nx+","+ny);
+                            visited.add(nx+","+ny);
                         }
                     }
                 }
             }
+
         }
+
     }
 
     int findAdj(String[][] board,int x,int y){
@@ -102,8 +123,13 @@ public class GameLogic {
         }
         return count;
     }
-    public void gameOver(){
-        System.out.println("BOOM!");
+    public void gameOver(boolean b){
+        if(!b){
+            System.out.println("BOOM!");
+        }
+        else{
+            System.out.println("U HAVE WON!!");
+        }
     }
     public void display(String[][] board){
         for(int i=0;i<board.length;i++){
@@ -112,6 +138,7 @@ public class GameLogic {
             }
             System.out.println();
         }
+        System.out.println(this.safe);
     }
     public Set<String> setBombs(int row, int col, int bombs) {
         Random rand=new Random(42);
