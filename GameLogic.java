@@ -4,6 +4,7 @@ public class GameLogic {
     public String[][] board;
     int row,col,bombs,safe;
 
+    Set<String> location;
     int noOfFlag;
 
     public GameLogic(int row,int col){
@@ -18,7 +19,7 @@ public class GameLogic {
                board[i][j]="E";
            }
        }
-       Set<String> location=setBombs(row,col,bombs);
+       location=setBombs(row,col,bombs);
        safe=board.length*board[0].length-location.size();
 
        noOfFlag=location.size();
@@ -179,7 +180,12 @@ public class GameLogic {
             board[x][y]="F";
             noOfFlag--;
         }else if(board[x][y].equals("F")){
-            board[x][y]="E";
+            if(location.contains(x+","+y)){
+                board[x][y]="M";
+            }
+            else {
+                board[x][y]="E";
+            }
             noOfFlag++;
         }
     }
