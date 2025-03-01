@@ -13,6 +13,7 @@ public class MineSweeperGUI extends JFrame {
         setSize(400,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setResizable(false);
 
         JLabel header=new JLabel("Minesweeper");
         header.setHorizontalAlignment(SwingConstants.CENTER);
