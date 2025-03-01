@@ -5,8 +5,14 @@ import java.awt.event.ActionListener;
 
 public class GameBoardGUI extends JFrame {
     int cellSize;
+    GameLogic game;
+    JButton[][] buttons;
+    int row,col;
+
     public GameBoardGUI(int row,int col,String title){
         cellSize=20;
+        this.row=row;
+        this.col=col;
 
         setTitle("MINESWEEPER:"+title);
         setSize(30*cellSize,30*cellSize+10);
@@ -28,14 +34,27 @@ public class GameBoardGUI extends JFrame {
             }
         });
 
+        /*----------------------------------MAIN PART!----------------------------------------*/
+        JPanel mainPanel=new JPanel(new GridLayout(row,col));
+        this.buttons=new JButton[row][col];
+        this.game=new GameLogic(row,col);
 
-
-
-
-
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                buttons[i][j]=new JButton();
+                buttons[i][j].setBackground(new Color(115, 110, 110));
+                mainPanel.add(buttons[i][j]);
+            }
+        }
+        add(mainPanel);
+        updateBoard();
 
         setLocationRelativeTo(null);
         setVisible(true);
+
+    }
+
+    private void updateBoard() {
 
     }
 }

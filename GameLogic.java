@@ -21,7 +21,7 @@ public class GameLogic {
        System.out.println(location);
        System.out.println("No of safes:"+safe);
 
-       startGame(board,location);
+       //startGame(board,location);
     }
     public int[] breakDownCell(String s){
         String[] part=s.split(",");
