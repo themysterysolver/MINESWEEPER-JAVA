@@ -155,4 +155,8 @@ public class GameLogic {
         }
         return bombSet;
     }
+
+    public String[][] getBoard() {
+        return this.board;
+    }
 }
