@@ -205,4 +205,8 @@ public class GameLogic {
         }
         return true;
     }
+
+    public int fetchSafe() {
+        return this.safe;
+    }
 }

@@ -72,10 +72,12 @@ public class GameBoardGUI extends JFrame {
                                 endGame();
                             }
                         }
-
+                        if(haveWon()){
+                            updateBoard(false);
+                            makeWin();
+                            return;
+                        }
                     }
-
-
                 });
                 mainPanel.add(buttons[i][j]);
             }
@@ -87,9 +89,25 @@ public class GameBoardGUI extends JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 
+    private void makeWin() {
+        removeEvents();
+        message.setText("You have won✨!");
+        JOptionPane.showMessageDialog(this,"<html><div " +
+                "style='text-align:center;" +
+                "font-size:16px; color:#6A1B9A;'><b>CONGRATULATIONS!</b><br></div>🎉" +
+                "You have won the game!🏆</html>");
+        makeRestartAppear();
+    }
+
+    private boolean haveWon() {
+        System.out.println(game.fetchSafe());
+        if(game.fetchSafe()==0){
+            return true;
+        }
+        return false;
+    }
 
     private void updateBoard(Boolean end) {
         String[][] board=game.getBoard();
@@ -101,6 +119,7 @@ public class GameBoardGUI extends JFrame {
             }
         }
     }
+
     public ImageIcon getImageIcon(String val, JButton button,Boolean end){
         String path="src/"+switch(val){ //Enhanced Switch in Java 12+
             case "B"->"0.png"; //blank
@@ -121,15 +140,14 @@ public class GameBoardGUI extends JFrame {
         }
         return new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(button.getWidth(),button.getHeight(),Image.SCALE_SMOOTH));
     }
+
     public void endGame(){
-        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++){
-                for(MouseListener ml:buttons[i][j].getMouseListeners()){
-                    buttons[i][j].removeMouseListener(ml);
-                }
-            }
-        }
+        removeEvents();
         message.setText("<html><center>U LANDED IN A MINE💣!</center></html>");
+        makeRestartAppear();
+    }
+
+    private void makeRestartAppear() {
         restart.setText("Restart");
         restart.setFocusPainted(true);
         restart.setBorderPainted(true);
@@ -139,5 +157,15 @@ public class GameBoardGUI extends JFrame {
                 new GameBoardGUI(row,col,theTitle);
             }
         });
+    }
+
+    private void removeEvents() {
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                for(MouseListener ml:buttons[i][j].getMouseListeners()){
+                    buttons[i][j].removeMouseListener(ml);
+                }
+            }
+        }
     }
 }
