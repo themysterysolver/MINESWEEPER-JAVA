@@ -3,6 +3,9 @@ import java.util.*;
 public class GameLogic {
     public String[][] board;
     int row,col,bombs,safe;
+
+    int noOfFlag;
+
     public GameLogic(int row,int col){
        this.row=row;
        this.col=col;
@@ -16,6 +19,8 @@ public class GameLogic {
        }
        Set<String> location=setBombs(row,col,bombs);
        safe=board.length*board[0].length-location.size();
+
+       noOfFlag=location.size();
 
        display(board);
        System.out.println(location);
@@ -158,5 +163,31 @@ public class GameLogic {
 
     public String[][] getBoard() {
         return this.board;
+    }
+
+    public void flagIt(int x, int y) {
+        if(board[x][y].equals("E") || board[x][y].equals("M")){
+            board[x][y]="F";
+            noOfFlag--;
+        }else if(board[x][y].equals("F")){
+            board[x][y]="E";
+            noOfFlag++;
+        }
+    }
+
+    public Boolean revealCell(int x, int y) {
+        if(board[x][y].equals("M")){
+            return false;
+        }
+        if (board[x][y].equals("E")) {
+            int count=findAdj(board,x,y);
+            if ( count!=0) {
+                this.safe--;
+                board[x][y] = String.valueOf(count);
+            } else {
+                BFS(board, x, y);
+            }
+        }
+        return true;
     }
 }

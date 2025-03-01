@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class GameBoardGUI extends JFrame {
     int cellSize;
@@ -48,12 +45,32 @@ public class GameBoardGUI extends JFrame {
                 buttons[i][j].setPreferredSize(new Dimension(cellSize,cellSize));
                 buttons[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
+                int x=i,y=j;
+                buttons[i][j].addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        if(SwingUtilities.isRightMouseButton(e)){
+                            game.flagIt(x,y);
+                            updateBoard(false);
+                        }else{
+                            if(game.revealCell(x,y)){
+                                updateBoard(false);
+                            }else{
+                                updateBoard(true);
+                                endGame();
+                            }
+                        }
+
+                    }
+
+
+                });
                 mainPanel.add(buttons[i][j]);
             }
         }
         add(mainPanel,BorderLayout.CENTER);
 
-        SwingUtilities.invokeLater(() -> updateBoard());
+        SwingUtilities.invokeLater(() -> updateBoard(false));
         System.out.println("CHECKPOINT: Board got updated!");
 
         setLocationRelativeTo(null);
@@ -61,17 +78,18 @@ public class GameBoardGUI extends JFrame {
 
     }
 
-    private void updateBoard() {
+
+    private void updateBoard(Boolean end) {
         String[][] board=game.getBoard();
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){
                 String cellValue=board[i][j];
-                buttons[i][j].setIcon(getImageIcon(cellValue,buttons[i][j]));
+                buttons[i][j].setIcon(getImageIcon(cellValue, buttons[i][j], end));
                 buttons[i][j].setContentAreaFilled(false);
             }
         }
     }
-    public ImageIcon getImageIcon(String val, JButton button){
+    public ImageIcon getImageIcon(String val, JButton button,Boolean end){
         String path="src/"+switch(val){ //Enhanced Switch in Java 12+
             case "B"->"0.png"; //blank
             case "1"->"1.png";
@@ -86,6 +104,18 @@ public class GameBoardGUI extends JFrame {
             case "F"->"11.png"; //for Flag
             default -> "10.png"; //unrevealed mine
         };
+        if(end && val.equals("M")){
+            path="src/9.png";
+        }
         return new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(button.getWidth(),button.getHeight(),Image.SCALE_SMOOTH));
+    }
+    public void endGame(){
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                for(MouseListener ml:buttons[i][j].getMouseListeners()){
+                    buttons[i][j].removeMouseListener(ml);
+                }
+            }
+        }
     }
 }
