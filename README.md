@@ -45,6 +45,13 @@ MINESWEEPER-JAVA/
 -  `GameLogic.java` handles the logic.
 -  `MineSweeperGUI.java` first dispaly page .
 -  `GameBoardGUI.java` game play and event handling.
+```
+MINESWEEPER-JAVA/
+├── src
+├── MAKE A JAR.md
+```
+- This contains the resource for `ImageIcon` I used for each button for *GUI*.
+- Read the `MAKE A JAR.md` to learn how to make a `JAR`.
 
 ## Features
 
