@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MineSweeperGUI extends JFrame {
     public MineSweeperGUI(){
@@ -26,6 +28,29 @@ public class MineSweeperGUI extends JFrame {
         ceneterPanel.add(hard);
 
         add(ceneterPanel,BorderLayout.CENTER);
+
+        easy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameBoardGUI(9,9,"EASY");
+                dispose();
+            }
+        });
+
+        medium.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameBoardGUI(16,16,"MEDIUM");
+                dispose();
+            }
+        });
+        hard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameBoardGUI(30,30,"HARD");
+                dispose();
+            }
+        });
 
         setLocationRelativeTo(null);
         setVisible(true);
