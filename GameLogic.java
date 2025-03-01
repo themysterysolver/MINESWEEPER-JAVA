@@ -10,7 +10,8 @@ public class GameLogic {
        this.row=row;
        this.col=col;
        board=new String[row][col];
-       bombs=(int)Math.sqrt(row*col);
+       double percentage=getMinePercenatge(row,col);
+       bombs=(int)Math.round(row*col*percentage);
 
        for(int i=0;i<row;i++){
            for(int j=0;j<col;j++){
@@ -28,6 +29,14 @@ public class GameLogic {
 
        //startGame(board,location);
     }
+
+    private double getMinePercenatge(int row, int col) {
+        int mull=row*col;
+        if(mull==81)return 0.12;
+        if(mull==256)return 0.16;
+        else return 0.21;
+    }
+
     public int[] breakDownCell(String s){
         String[] part=s.split(",");
         return new int[]{Integer.parseInt(part[0]),Integer.parseInt(part[1])};
