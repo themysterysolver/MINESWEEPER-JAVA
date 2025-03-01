@@ -20,7 +20,7 @@ public class GameLogic {
            }
        }
        location=setBombs(row,col,bombs);
-       safe=board.length*board[0].length-location.size();
+       safe=(row*col)-location.size();
 
        noOfFlag=location.size();
 
@@ -92,7 +92,9 @@ public class GameLogic {
         visited.add(x+","+y);
         Queue<String> q=new LinkedList<>();
         q.add(x+","+y);
-        this.safe--;
+        if(!board[x][y].equals("B")){
+            this.safe--;
+        }
         while(!q.isEmpty()){
             int l= q.size();
             for(int i=0;i<l;i++){
@@ -110,7 +112,9 @@ public class GameLogic {
                         if (nx < 0 || ny < 0 || nx >= row || ny >= col || visited.contains(nx + "," + ny)) {
                             continue;
                         } else {
-                            this.safe--;
+                            if(!board[nx][ny].equals("B")){
+                                this.safe--;
+                            }
                             q.add(nx+","+ny);
                             visited.add(nx+","+ny);
                         }
@@ -196,7 +200,9 @@ public class GameLogic {
         if (board[x][y].equals("E")) {
             int count=findAdj(board,x,y);
             if ( count!=0) {
-                this.safe--;
+                if (!board[x][y].equals(String.valueOf(count))) {
+                    this.safe--;
+                }
                 board[x][y] = String.valueOf(count);
             } else {
                 BFS(board, x, y);
@@ -206,6 +212,7 @@ public class GameLogic {
     }
 
     public int fetchSafe() {
+        //System.out.println(this.safe);
         return this.safe;
     }
 }
