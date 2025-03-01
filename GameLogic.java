@@ -24,9 +24,9 @@ public class GameLogic {
 
        noOfFlag=location.size();
 
-       display(board);
-       System.out.println(location);
-       System.out.println("No of safes:"+safe);
+       //display(board);
+       //System.out.println(location);
+       //System.out.println("No of safes:"+safe);
 
        //startGame(board,location);
     }
@@ -56,14 +56,14 @@ public class GameLogic {
             String click = x + "," + y;
 
             int[] loc = breakDownCell(click);
-            System.out.println("The cell u clicked is "+loc[0]+" "+loc[1]+" and the cell is "+board[loc[0]][loc[1]]);
+            //System.out.println("The cell u clicked is "+loc[0]+" "+loc[1]+" and the cell is "+board[loc[0]][loc[1]]);
 
             if(checkBomb(click,locations)){return;}
 
 
             if (board[loc[0]][loc[1]].equals("E")) {
                 int count=findAdj(board, loc[0], loc[1]);
-                System.out.println(count+"is the adj COUNT FOR:"+loc[0]+":"+loc[1]);
+                //System.out.println(count+"is the adj COUNT FOR:"+loc[0]+":"+loc[1]);
                 if ( count!=0) {
                     this.safe--;
                     board[x][y] = String.valueOf(count);
@@ -71,7 +71,7 @@ public class GameLogic {
                     BFS(board, x, y);
                 }
             }
-            display(board);
+            //display(board);
         }
         gameOver(true);
     }
@@ -156,7 +156,7 @@ public class GameLogic {
         System.out.println(this.safe);
     }
     public Set<String> setBombs(int row, int col, int bombs) {
-        Random rand=new Random(42);
+        Random rand=new Random();
         Set<String> bombSet=new HashSet<>();
         while(bombs!=0){
             int x=rand.nextInt(row);

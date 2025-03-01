@@ -85,7 +85,7 @@ public class GameBoardGUI extends JFrame {
         add(mainPanel,BorderLayout.CENTER);
 
         SwingUtilities.invokeLater(() -> updateBoard(false));
-        System.out.println("CHECKPOINT: Board got updated!");
+        //System.out.println("CHECKPOINT: Board got updated!");
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -102,7 +102,7 @@ public class GameBoardGUI extends JFrame {
     }
 
     private boolean haveWon() {
-        System.out.println(game.fetchSafe());
+        //System.out.println(game.fetchSafe());
         if(game.fetchSafe()==0){
             return true;
         }
