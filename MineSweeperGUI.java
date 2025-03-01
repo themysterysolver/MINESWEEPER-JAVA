@@ -17,7 +17,7 @@ public class MineSweeperGUI extends JFrame {
         add(header,BorderLayout.NORTH);
 
 
-
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }
