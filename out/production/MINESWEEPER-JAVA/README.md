@@ -7,7 +7,7 @@
 
 ## Why I did it?🗿
 
-- when I was started `BFS` problems in `leetcode` to crack `OA` for intern and placement,I found this q [529.Mineweeper](https://leetcode.com/problems/minesweeper/description/),
+- when I started `BFS` problems in `leetcode` to crack `OA` for intern and placement,I found this q [529.Mineweeper](https://leetcode.com/problems/minesweeper/description/),
   which made me understand how a `minesweeper` game works and intrested me.(*Bucket list project*)
   - *FUN FACT*:I used to randomly pick cells when I first got a computer in 6th std.😁
   - I had no clue how it works.Mostly everyone during that time don't know how to play and I bet many don't know how to play now too.😂
@@ -20,7 +20,7 @@
 - Ofc to have fun🕺
 
 > If u want to learn how to develop this?
-Then you can view my commits,it guides you to do the same work.
+Then you can view my commits,it guides you to  how do the same work.
 
 ## GamePlay
 
@@ -45,6 +45,13 @@ MINESWEEPER-JAVA/
 -  `GameLogic.java` handles the logic.
 -  `MineSweeperGUI.java` first dispaly page .
 -  `GameBoardGUI.java` game play and event handling.
+```
+MINESWEEPER-JAVA/
+├── src
+├── MAKE A JAR.md
+```
+- This contains the resource for `ImageIcon` I used for each button for *GUI*.
+- Read the `MAKE A JAR.md` to learn how to make a `JAR`.
 
 ## Features
 

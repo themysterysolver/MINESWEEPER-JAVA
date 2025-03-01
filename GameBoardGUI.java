@@ -114,13 +114,13 @@ public class GameBoardGUI extends JFrame {
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){
                 String cellValue=board[i][j];
-                buttons[i][j].setIcon(getImageIcon(cellValue, buttons[i][j], end));
+                buttons[i][j].setIcon(getImageIcon(cellValue, buttons[i][j], end,i,j));
                 buttons[i][j].setContentAreaFilled(false);
             }
         }
     }
 
-    public ImageIcon getImageIcon(String val, JButton button,Boolean end){
+    public ImageIcon getImageIcon(String val, JButton button,Boolean end,int i,int j){
         String path="src/"+switch(val){ //Enhanced Switch in Java 12+
             case "B"->"0.png"; //blank
             case "1"->"1.png";
@@ -135,7 +135,7 @@ public class GameBoardGUI extends JFrame {
             case "F"->"11.png"; //for Flag
             default -> "10.png"; //unrevealed mine
         };
-        if(end && val.equals("M")){
+        if(end && (val.equals("M")||game.location.contains(i+","+j))){
             path="src/9.png";
         }
         return new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(button.getWidth(),button.getHeight(),Image.SCALE_SMOOTH));

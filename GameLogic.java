@@ -92,7 +92,7 @@ public class GameLogic {
         visited.add(x+","+y);
         Queue<String> q=new LinkedList<>();
         q.add(x+","+y);
-        if(!board[x][y].equals("B")){
+        if(board[x][y].equals("E")){
             this.safe--;
         }
         while(!q.isEmpty()){
@@ -112,7 +112,7 @@ public class GameLogic {
                         if (nx < 0 || ny < 0 || nx >= row || ny >= col || visited.contains(nx + "," + ny)) {
                             continue;
                         } else {
-                            if(!board[nx][ny].equals("B")){
+                            if(board[nx][ny].equals("E")){
                                 this.safe--;
                             }
                             q.add(nx+","+ny);
@@ -200,9 +200,7 @@ public class GameLogic {
         if (board[x][y].equals("E")) {
             int count=findAdj(board,x,y);
             if ( count!=0) {
-                if (!board[x][y].equals(String.valueOf(count))) {
-                    this.safe--;
-                }
+                this.safe--;
                 board[x][y] = String.valueOf(count);
             } else {
                 BFS(board, x, y);
