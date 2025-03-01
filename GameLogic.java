@@ -101,7 +101,6 @@ public class GameLogic {
                 int count=findAdj(board,loc[0],loc[1]);
                 if(count>0){
                     board[loc[0]][loc[1]]= String.valueOf(count);
-
                 }
                 else {
                     board[loc[0]][loc[1]]="B";
@@ -132,7 +131,7 @@ public class GameLogic {
             if(nx<0||ny<0||nx>=row||ny>=col){
                 continue;
             }
-            if(board[nx][ny].equals("M")){
+            if(location.contains(nx+","+ny)){
                 count++;
             }
         }

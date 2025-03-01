@@ -155,6 +155,7 @@ public class GameBoardGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new GameBoardGUI(row,col,theTitle);
+                dispose();
             }
         });
     }
