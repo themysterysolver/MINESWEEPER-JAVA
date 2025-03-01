@@ -28,6 +28,15 @@ public class MineSweeperGUI extends JFrame {
         ceneterPanel.add(medium);
         ceneterPanel.add(hard);
 
+
+        easy.setBackground(new Color(0, 150, 136));    // Teal Blue (#009688)
+        medium.setBackground(new Color(96, 125, 139)); // Steel Gray (#607D8B)
+        hard.setBackground(new Color(103, 58, 183));   // Deep Purple (#673AB7)
+
+        easy.setForeground(Color.WHITE);
+        medium.setForeground(Color.WHITE);
+        hard.setForeground(Color.WHITE);
+
         add(ceneterPanel,BorderLayout.CENTER);
 
         easy.addActionListener(new ActionListener() {

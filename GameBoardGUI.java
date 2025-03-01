@@ -7,11 +7,18 @@ public class GameBoardGUI extends JFrame {
     GameLogic game;
     JButton[][] buttons;
     int row,col;
-
+    String theTitle;
+    JLabel message;
+    JButton restart;
     public GameBoardGUI(int row,int col,String title){
         cellSize=20;
         this.row=row;
         this.col=col;
+        this.theTitle=title;
+        restart=new JButton("");
+        restart.setContentAreaFilled(false);
+        restart.setFocusPainted(false);
+        restart.setBorderPainted(false);
 
         setTitle("MINESWEEPER:"+title);
         setSize(30*cellSize,30*cellSize+10);
@@ -19,9 +26,14 @@ public class GameBoardGUI extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
 
-        JPanel topPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel topPanel=new JPanel(new BorderLayout());
+        topPanel.add(restart,BorderLayout.WEST);
+
+        message=new JLabel("<html><center>Minesweeper</center></html>");
+        topPanel.add(message,BorderLayout.CENTER);
+
         JButton previous=new JButton("⬅\uFE0F");
-        topPanel.add(previous);
+        topPanel.add(previous,BorderLayout.EAST);
 
         add(topPanel,BorderLayout.NORTH);
 
@@ -117,5 +129,15 @@ public class GameBoardGUI extends JFrame {
                 }
             }
         }
+        message.setText("<html><center>U LANDED IN A MINE💣!</center></html>");
+        restart.setText("Restart");
+        restart.setFocusPainted(true);
+        restart.setBorderPainted(true);
+        restart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameBoardGUI(row,col,theTitle);
+            }
+        });
     }
 }
